@@ -39,9 +39,10 @@ docker compose build
 docker compose up -d
 ```
 
-- The **frontend** is served by Nginx on [http://localhost:4173](http://localhost:4173) and automatically proxies `/api/*` requests to the backend container.
-- The **backend** FastAPI service listens on port `8000` (forwarded to the host, so you can still hit the API directly if needed).
+- The **frontend** is served by Nginx on [http://localhost:5173](http://localhost:5173) and automatically proxies `/api/*` requests to the backend container.
+- The **backend** FastAPI service listens on container port `8000`, exposed on `http://localhost:9533`.
 - To customize the API base path during the frontend image build, pass `--build-arg VITE_API_BASE=<value>` to the `docker compose build` command.
+- Resource reservations/limits are included in `docker-compose.yml` to guarantee the backend gets at least 2 vCPUs/2 GB RAM (up to 4/4 GB) and the frontend gets 1 vCPU/1 GB (up to 2/2 GB). Adjust those values if your on-prem host has different capacity.
 
 Stop the stack with `docker compose down`. These containers are stateless; restarting the stack clears every uploaded session exactly like the browser app.
 

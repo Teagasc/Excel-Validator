@@ -6,7 +6,15 @@ services:
       context: ./backend
     container_name: excel-checker-backend
     ports:
-      - "8000:8000"
+      - "9533:8000"
+    deploy:
+      resources:
+        reservations:
+          cpus: "2"
+          memory: 2G
+        limits:
+          cpus: "4"
+          memory: 4G
     restart: unless-stopped
 
   frontend:
@@ -16,7 +24,15 @@ services:
         VITE_API_BASE: /api
     container_name: excel-checker-frontend
     ports:
-      - "4173:4173"
+      - "5173:4173"
+    deploy:
+      resources:
+        reservations:
+          cpus: "1"
+          memory: 1G
+        limits:
+          cpus: "2"
+          memory: 2G
     depends_on:
       - backend
     restart: unless-stopped
